@@ -2,6 +2,7 @@ const inputEl = document.getElementById('fieldInput');
 const addBtn = document.getElementById('addBtn');
 const saveBtn = document.getElementById('saveBtn');
 const listEl = document.getElementById('fieldsList');
+const messageSpan = document.getElementById('message');
 let popUpSelectedFields = [];
 
 const init = async () => {
@@ -69,7 +70,20 @@ const renderList = () => {
     });
 };
 
-// Add new field
+const toggleOverlay = (show) => {
+    const overlay = document.querySelector('.overlay');
+    if (!overlay) return;
+    overlay.style.display = show ? 'flex' : 'none';
+};
+
+const clearMessageLine = () => {
+    setTimeout(() => {
+        messageSpan.textContent = '';
+        messageSpan.className = '';
+    }, 3200);
+};
+
+// Event Listeners
 addBtn.addEventListener('click', () => {
     const val = inputEl.value.trim();
     if (val && !popUpSelectedFields.includes(val)) {
@@ -79,11 +93,19 @@ addBtn.addEventListener('click', () => {
     }
 });
 
-// Save to local storage
 saveBtn.addEventListener('click', async () => {
-    await saveSelectedFields(popUpSelectedFields);
-    saveBtn.textContent = 'Saved!';
-    setTimeout(() => (saveBtn.textContent = 'Save'), 1200);
+    toggleOverlay(true);
+    await saveSelectedFields(popUpSelectedFields).catch(() => {
+        toggleOverlay(false);
+        messageSpan.classList.add('red');
+        messageSpan.textContent = 'Error';
+        clearMessageLine();
+        return;
+    });
+    setTimeout(() => toggleOverlay(false), 1000);
+    messageSpan.classList.add('green');
+    messageSpan.textContent = 'Saved!';
+    clearMessageLine();
 });
 
 (async () => {

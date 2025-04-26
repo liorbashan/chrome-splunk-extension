@@ -6,13 +6,21 @@
         <link rel="stylesheet" href="popup.css" type="text/css" />
     </head>
     <body>
+        <div class="overlay">
+            <div class="loader"></div>
+        </div>
         <h3>Set Splunk Default Selected Fields</h3>
         <div>
             <input id="fieldInput" placeholder="Enter field name" />
             <button id="addBtn">Add</button>
         </div>
-        <ul id="fieldsList"></ul>
-        <button id="saveBtn">Save</button>
+        <div>
+            <ul id="fieldsList"></ul>
+        </div>
+        <div class="row">
+            <button id="saveBtn">Save</button>
+            <span id="message"></span>
+        </div>
 
         <script src="common.js"></script>
         <script src="popup.js"></script>
