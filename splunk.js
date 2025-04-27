@@ -1,7 +1,14 @@
+const _waitRegistry = new Map();
+
 const waitForElement = (selector, root = document.body) => {
+  if (_waitRegistry.has(selector)) {
+    throw new Error(`Selector ${selector} is already in the waiting list!`);
+  }
+
   return new Promise((resolve, rejet) => {
     const existing = document.querySelector(selector);
     if (existing) {
+      _waitRegistry.delete(selector);
       print(`selector ${selector} exists!. ${existing}`);
       return resolve(existing);
     }
@@ -11,6 +18,7 @@ const waitForElement = (selector, root = document.body) => {
       const found = document.querySelector(selector);
       if (found) {
         obs.disconnect();
+        _waitRegistry.delete(selector);
         print(`${selector} found! Observer disconnected.`);
         resolve(found);
       }
@@ -20,6 +28,7 @@ const waitForElement = (selector, root = document.body) => {
       childList: true,
       subtree: true,
     });
+    _waitRegistry.set(selector, observer);
   });
 };
 
@@ -50,7 +59,9 @@ const closeAllFieldsSection = () => {
 };
 
 const applySavedFieldsSelection = async () => {
-  await waitForElement(`td.col-select label.checkbox a[data-value="host"]`);
+  await waitForElement(`td.col-select label.checkbox a[data-value="host"]`).catch((error) => {
+    print(error.message);
+  });
   const table = document.querySelector('tbody.fields-list');
   // RESET CHECKBOXES:
   const allAnchors = table.querySelectorAll('td.col-select label.checkbox a');
@@ -90,7 +101,9 @@ const onDomReady = (fn) => {
 onDomReady(async () => {
   try {
     const navContainerSelector = '[data-role="app-nav-container"]';
-    const navContainer = await waitForElement(navContainerSelector);
+    const navContainer = await waitForElement(navContainerSelector).catch((error) => {
+      print(error.message);
+    });
     addAutoSelectButton(navContainer);
   } catch (err) {
     print(`Error waiting for toolbar: '${err}`);
