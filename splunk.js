@@ -41,12 +41,12 @@ const addAutoSelectButton = (parentElement) => {
 
 const openAllFieldsSection = () => {
   const allFieldsBtn = document.querySelector('div.search-results-eventspane-fieldsviewer a.all');
-  allFieldsBtn.click();
+  if (allFieldsBtn) allFieldsBtn.click();
 };
 
 const closeAllFieldsSection = () => {
   const closeSelectFieldsDialogBtn = document.querySelector('div.modal.shared-fieldpicker.in button.close');
-  closeSelectFieldsDialogBtn.click();
+  if (closeSelectFieldsDialogBtn) closeSelectFieldsDialogBtn.click();
 };
 
 const applySavedFieldsSelection = async () => {
@@ -54,12 +54,14 @@ const applySavedFieldsSelection = async () => {
   const table = document.querySelector('tbody.fields-list');
   // RESET CHECKBOXES:
   const allAnchors = table.querySelectorAll('td.col-select label.checkbox a');
-  allAnchors.forEach((anchor) => {
-    const icon = anchor.querySelector('i.icon-check');
-    if (icon && icon.style.display !== 'none') {
-      anchor.click();
-    }
-  });
+  if (allAnchors) {
+    allAnchors.forEach((anchor) => {
+      const icon = anchor.querySelector('i.icon-check');
+      if (icon && icon.style.display !== 'none') {
+        anchor.click();
+      }
+    });
+  }
 
   // APPLY SELECTED FIELDS:
   const fields = await getSelectedFields();

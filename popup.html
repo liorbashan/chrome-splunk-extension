@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Splunk Fields Selector</title>
-        <link rel="stylesheet" href="popup.css" type="text/css" />
-    </head>
-    <body>
-        <div class="overlay">
-            <div class="loader"></div>
-        </div>
-        <h3>Set Splunk Default Selected Fields</h3>
-        <div>
-            <input id="fieldInput" placeholder="Enter field name" />
-            <button id="addBtn">Add</button>
-        </div>
-        <div>
-            <ul id="fieldsList"></ul>
-        </div>
-        <div class="row">
-            <button id="saveBtn">Save</button>
-            <span id="message"></span>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <title>Splunk Fields Selector</title>
+    <link rel="stylesheet" href="popup.css" type="text/css" />
+  </head>
+  <body>
+    <div class="popup-dark">
+      <div class="overlay">
+        <div class="loader"></div>
+      </div>
 
-        <script src="common.js"></script>
-        <script src="popup.js"></script>
-    </body>
+      <h3>Set Splunk Default Selected Fields</h3>
+
+      <div class="input-row">
+        <input id="fieldInput" type="text" placeholder="Enter field name" autocomplete="off" />
+        <button id="addBtn" class="btn btn-add">Add</button>
+      </div>
+
+      <ul id="fieldsList"></ul>
+
+      <div class="row">
+        <button id="saveBtn" class="btn btn-save">Save</button>
+        <span id="message"></span>
+      </div>
+    </div>
+
+    <script src="common.js"></script>
+    <script src="popup.js"></script>
+  </body>
 </html>

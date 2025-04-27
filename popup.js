@@ -23,8 +23,6 @@ const renderList = () => {
     // Remove button
     const x = document.createElement('button');
     x.textContent = '✕';
-    x.style.border = 'none';
-    x.style.background = 'transparent';
     x.onclick = () => {
       popUpSelectedFields.splice(idx, 1);
       renderList();
@@ -76,7 +74,7 @@ const toggleOverlay = (show) => {
 
 const clearMessageLine = () => {
   setTimeout(() => {
-    messageSpan.textContent = '';
+    messageSpan.textContent = ' ';
     messageSpan.className = '';
   }, 3200);
 };
