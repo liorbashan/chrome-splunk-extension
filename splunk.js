@@ -64,17 +64,14 @@ const applySavedFieldsSelection = async () => {
   // APPLY SELECTED FIELDS:
   const fields = await getSelectedFields();
   fields.forEach((name) => {
-    // an <a> inside a td.col-select > label.checkbox
     const selector = `td.col-select label.checkbox a[data-value="${name}"]`;
     const anchor = table.querySelector(selector);
-    if (!anchor) return; // field not in this table
+    if (!anchor) return;
 
-    // inside that <a> is an <i class="icon-check"> whose style.display === "none" if unchecked
     const icon = anchor.querySelector('i.icon-check');
     const isChecked = icon && icon.style.display !== 'none';
 
     if (!isChecked) {
-      // simulate the user clicking it
       anchor.click();
     }
   });
@@ -97,7 +94,3 @@ onDomReady(async () => {
     print(`Error waiting for toolbar: '${err}`);
   }
 });
-
-// table - table.table.table-striped table-row-expanding.table-chrome.table-fields-list
-// tr - tr.shared-fieldpicker-table-tablerow
-// td = td.col-fields , td.col-select
